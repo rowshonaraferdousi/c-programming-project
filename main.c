@@ -6,156 +6,122 @@ GitHub ID :
 Course Instructor : Md. Jehadul Islam Mony
 Department : Computer Science & Engineering
 Institution : Leading University,Sylhet
-/*
 #include <stdio.h>
 
 int main() {
-    int MAX_SIZE;
-    printf("Enter the size of the array: ");
-    scanf("%d", &MAX_SIZE);
-    int arr[MAX_SIZE];
-    int n = 0; // current size of the array
-    int choice, value, index, i, found;
+    int arr[100];
+    int count = 0;
+    int choice;
 
-    while (1) {
-
-        printf("\n1. Insert a number (at end or specific index)\n");
-        printf("2. Update a number by index\n");
-        printf("3. Delete a number by index\n");
-        printf("4. Search for a number\n");
-        printf("5. Find largest and smallest number\n");
-        printf("6. Exit\n");
-        printf("Enter your choice: ");
+    do {
+        printf("\n--- Menu ---\n");
+        printf("1. Insert Number\n");
+        printf("2. Update Number\n");
+        printf("3. Delete Number\n");
+        printf("4. Search Number\n");
+        printf("5. Find Largest and Smallest\n");
+        printf("6. Display Array\n");
+        printf("0. Exit\n");
+        printf("Enter choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
-            case 1: // Insert
-                if (n >= MAX_SIZE) {
+            case 1: {
+                if (count >= 100) {
                     printf("Array is full!\n");
                 } else {
-                    printf("Enter the number to insert: ");
-                    scanf("%d", &value);
-
-                    printf("Do you want to insert at a specific index? (1 = Yes, 0 = No): ");
-                    int opt;
-                    scanf("%d", &opt);
-
-                    if (opt == 1) {
-                        printf("Enter index (0 to %d): ", n);
-                        scanf("%d", &index);
-
-                        if (index >= 0 && index <= n) {
-                            // Shift elements to the right to make space
-                            for (i = n; i > index; i--) {// ride a number moving
-                                arr[i] = arr[i - 1];
-                            }
-                            arr[index] = value;
-                            n++;
-                            printf("Number inserted at index %d.\n", index);
-                        } else {
-                            printf("Invalid index!\n");
-                        }
-                    } else {
-                        // Insert at the end
-                        arr[n] = value;
-                        n++;
-                        printf("Number inserted at the end.\n");
-                    }
-                }
-                // Print updated array
-                printf("Updated array: ");
-
-                for (int i = 0; i < n; i++) {
-
-                    printf("%d ", arr[i]);
-
+                    int num;
+                    printf("Enter number to insert: ");
+                    scanf("%d", &num);
+                    arr[count] = num;
+                    count++;
+                    printf("Inserted successfully.\n");
                 }
                 break;
+            }
 
-            case 2: // Update
-                printf("Enter index to update (0 to %d): ", n - 1);
-                scanf("%d", &index);
-                if (index >= 0 && index < n) {
+            case 2: {
+                int pos, newVal;
+                printf("Enter position to update (0 to %d): ", count - 1);
+                scanf("%d", &pos);
+                if (pos >= 0 && pos < count) {
                     printf("Enter new value: ");
-                    scanf("%d", &value);
-                    arr[index] = value;
-                    printf("Number updated successfully.\n");
+                    scanf("%d", &newVal);
+                    arr[pos] = newVal;
+                    printf("Updated successfully.\n");
                 } else {
-                    printf("Invalid index!\n");
-                }
-                // Print updated array
-                printf("Updated array: ");
-
-                for (int i = 0; i < n; i++) {
-
-                    printf("%d ", arr[i]);
-
+                    printf("Invalid position!\n");
                 }
                 break;
+            }
 
-            case 3: // Delete
-                printf("Enter index to delete (0 to %d): ", n - 1);
-                scanf("%d", &index);
-                if (index >= 0 && index < n) {
-                    for (i = index; i < n - 1; i++) {
+            case 3: {
+                int pos;
+                printf("Enter position to delete (0 to %d): ", count - 1);
+                scanf("%d", &pos);
+                if (pos >= 0 && pos < count) {
+                    for (int i = pos; i < count - 1; i++) {
                         arr[i] = arr[i + 1];
                     }
-                    n--;
-                    printf("Number deleted successfully.\n");
+                    count--;
+                    printf("Deleted successfully.\n");
                 } else {
-                    printf("Invalid index!\n");
-                }
-                // Print updated array
-                printf("Updated array: ");
-
-                for (int i = 0; i < n; i++) {
-
-                    printf("%d ", arr[i]);
-
+                    printf("Invalid position!\n");
                 }
                 break;
+            }
 
-            case 4: // Search
+            case 4: {
+                int num;
+                int found = 0;
                 printf("Enter number to search: ");
-                scanf("%d", &value);
-                found = 0;
-                for (i = 0; i < n; i++) {
-                    if (arr[i] == value) {
-                        printf("Number found at index %d\n", i);
+                scanf("%d", &num);
+                for (int i = 0; i < count; i++) {
+                    if (arr[i] == num) {
+                        printf("Number found at position: %d\n", i);
                         found = 1;
-                        break;
                     }
                 }
-                if (found==0) {
+                if (!found) {
                     printf("Number not found.\n");
                 }
                 break;
+            }
 
-            case 5: // Find largest and smallest
-                if (n == 0) {
+            case 5: {
+                if (count == 0) {
                     printf("Array is empty!\n");
                 } else {
-                    int largest = arr[0];
-                    int smallest = arr[0];
-                    for (i = 1; i < n; i++) {
-                        if (arr[i] > largest)
-                            largest = arr[i];
-                        if (arr[i] < smallest)
-                            smallest = arr[i];
+                    int max = arr[0];
+                    int min = arr[0];
+                    for (int i = 1; i < count; i++) {
+                        if (arr[i] > max) max = arr[i];
+                        if (arr[i] < min) min = arr[i];
                     }
-                    printf("Largest number: %d\n", largest);
-                    printf("Smallest number: %d\n", smallest);
+                    printf("Largest number: %d\n", max);
+                    printf("Smallest number: %d\n", min);
                 }
                 break;
+            }
 
-            case 6: // Exit
-                printf("Exiting the program. Goodbye!\n");
-                return 0;
+            case 6: {
+                printf("Current array: ");
+                for (int i = 0; i < count; i++) {
+                    printf("%d ", arr[i]);
+                }
+                printf("\n");
+                break;
+            }
+
+            case 0:
+                printf("Exiting...\n");
+                break;
 
             default:
-                printf("Invalid choice! Please try again.\n");
+                printf("Invalid choice!\n");
         }
-    }
+
+    } while (choice != 0);
 
     return 0;
 }
